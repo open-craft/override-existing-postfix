@@ -1,0 +1,13 @@
+---
+
+# Variables necessary to change the passwords for existing
+# postfix instances and restart the service. 
+
+POSTFIX_QUEUE_PASSWORD_FILE: "/etc/postfix/sasl/passwd"
+POSTFIX_PASSWORD_FILE_OWNER: "root"
+POSTFIX_PASSWORD_FILE_GROUP: "{{ POSTFIX_PASSWORD_FILE_OWNER }}"
+
+POSTFIX_QUEUE_HOST: "mail.authsmtp.com"
+POSTFIX_QUEUE_PORT: 587
+POSTFIX_QUEUE_USERNAME: ""
+POSTFIX_QUEUE_PASSWORD: ""

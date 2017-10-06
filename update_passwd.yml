@@ -1,0 +1,10 @@
+---
+# Runs the update_passwd role to provide new Postfix settings to an instance
+# Usage:
+#   ansible-playbook ./run_role.yml -i "hostname," -e role=my_awesome_role
+#
+- hosts: all
+  become: True
+  gather_facts: True
+  roles:
+    - update_passwd

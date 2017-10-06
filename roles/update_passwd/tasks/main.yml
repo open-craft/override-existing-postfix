@@ -1,0 +1,26 @@
+---
+
+# Drop a new postfix password file on the instance, and then restart the service.
+
+- name: Configure postfix
+  command: postconf -e '{{ item }}'
+  with_items:
+    - "relayhost = {{ POSTFIX_QUEUE_HOST }}:{{ POSTFIX_QUEUE_PORT }}"
+
+- name: Deploy new configuration file
+  template:
+    backup: yes
+    dest: "{{ POSTFIX_QUEUE_PASSWORD_FILE }}"
+    force: yes
+    group: "{{ POSTFIX_PASSWORD_FILE_GROUP }}"
+    owner: "{{ POSTFIX_PASSWORD_FILE_OWNER }}"
+    mode: 0600
+    src: "passwd.j2"
+
+- name: Hash postfix SASL password
+  command: "postmap hash:{{ POSTFIX_QUEUE_PASSWORD_FILE }}"
+
+- name: Restart postfix
+  service:
+    name: postfix
+    state: restarted
